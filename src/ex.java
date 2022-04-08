@@ -1,4 +1,4 @@
-package proj;
+
 
 import java.io.File;
 
@@ -30,7 +30,7 @@ public class ex extends Application {
   public void start(Stage primaryStage) {
     //String workingDir = System.getProperty("user.dir");
     //final File f = new File(workingDir, "../media/omgrobots.flv");
-    String file = "https://youtu.be/IyT1_C5OQZc";
+    String file = "/Users/noemiehanus/Desktop/forever together/stages/Adios.mp4";
     
     final Media m = new Media(new File(file).toURI().toString());
     final MediaPlayer mp = new MediaPlayer(m);
@@ -46,24 +46,6 @@ public class ex extends Application {
 
     mv.setRotate(-90); 
 
-    /*ButtonBar bar = new ButtonBar();
-
-    Button button1 = new Button("Play");
-    Button button2 = new Button("Pause");
-    Button button3 = new Button("Stop");*/
-    
-        
-    /*button1.setOnAction(e -> {
-        mp.play();
-    });
-        
-    button2.setOnAction(e -> {
-        mp.pause();
-    });
-        
-    button3.setOnAction(e -> {
-        mp.stop();
-    });*/
     
     StackPane root = new StackPane();
    // GridPane root = new GridPane();

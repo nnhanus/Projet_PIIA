@@ -13,7 +13,7 @@ public class VideoPlayerExample1 extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        String videoPath = "/Users/noemiehanus/Desktop/dossier sans titre/larochdlle/yanHerve.mp4";
+        String videoPath = "/Users/noemiehanus/Desktop/forever together/stages/Adios.mp4";
         String videoFileURIStr = new File(videoPath).toURI().toString();
         //Instantiating Media class
         Media media = new Media(videoFileURIStr);
