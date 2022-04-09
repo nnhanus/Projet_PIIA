@@ -1,98 +1,142 @@
+import java.io.File;
+import java.net.URL;
 import java.util.ResourceBundle;
 
-import java.net.URL;
-
-import javafx.fxml.Initializable;
-import java.io.File;
-import java.io.IOException;
-
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Orientation;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.control.SplitPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.scene.media.MediaPlayer.Status;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
+import javafx.scene.media.MediaView;
 
 public class Control implements Initializable{
 
-    @FXML MediaView mv;
-    @FXML Slider time;
-    @FXML Button play;
+  @FXML private VBox box; //le contenant principal
+  @FXML private MediaView mv; //mediaView
+  @FXML private Slider time; //slider du temps
+  @FXML private Button play; //le bouton play
+  @FXML private HBox hbox;  // les différents boutons
+  @FXML Slider slidVol; //slider pour le volume
+  @FXML Label volPourc; //indique le % du volume
+  @FXML HBox boxVol;  //hbox pour le volume
+  @FXML HBox boxTime; //hbow pour le temps
+  @FXML Label currentTime; //temps actuel
+  @FXML Label totTime; //temps total du media
 
-    String file = "/Users/noemiehanus/Desktop/forever together/stages/Adios.mp4";
-    Media m = new Media(new File(file).toURI().toString());
-    MediaPlayer mp;
+  boolean isSpedUp = false; //vrai si la vidéo est en x2
+ 
+  String file = "/Users/noemiehanus/Desktop/forever together/stages/Boca.mp4"; //lien du média
+  Media m; //media à lire
+  MediaPlayer mp; //le mediaPlayer
 
-  public void initialize(URL arg0, ResourceBundle arg1){
-    mp = new MediaPlayer(m);
-    //mv = new MediaView(mp);
-    mv.setMediaPlayer(mp);
-    mv.setRotate(-90);
-    final DoubleProperty width = mv.fitWidthProperty();
-    final DoubleProperty height = mv.fitHeightProperty();
-    
-    width.bind(Bindings.selectDouble(mv.sceneProperty(), "width"));
-    height.bind(Bindings.selectDouble(mv.sceneProperty(), "height"));
-    //time = new Slider(); // Slider for time
-    //play = new Button("||");
-    //mv.setMediaPlayer(mp);
-    //SplitPane root = (SplitPane)FXMLLoader.load(getClass().getResource("medplay.fxml"));
+
+public void initialize(URL arg0, ResourceBundle arg1){
+  //lié le media, le mediaPlayer et le mediaViews
+  m = new Media(new File(file).toURI().toString());
+  mp = new MediaPlayer(m);
+  mv.setMediaPlayer(mp);
+  //rotate la vidéo parce que apparemment elle est jamais dans le bon sens 
+  mv.setRotate(90);
+  //lancer la vidéo quand le player se lance
+  mp.play();
+  //mp.setMute(false); 
+
+  //gestion du volume par rapport au slider
+  //Comme le volume de media player est entre 0 et 1 on ramène le volume entre 0 et 1
+  slidVol.setMin(0.0); 
+  slidVol.setMax(1.0);
+  //volume de départ
+  mp.setVolume(0.3);
+  slidVol.setValue(0.3); 
+  volPourc.setText("30%"); 
   
-    // Providing functionality to time slider
-    mp.currentTimeProperty().addListener(new InvalidationListener() {
-      public void invalidated(Observable ov)
-      {
-          updatesValues();
-      }
+
+  play.setText("||");//initialisation de l'affichage du bouton de lecture
+
+  currentTime.setText("0:00");//initialisation de l'affichage du temps
+
+
+  /**
+   * Récupération du temps total du média
+   * Pour ne pas avoir "UNKNOWN", on le récupère une fois que le player est prêt
+   */
+  mp.setOnReady(new Runnable() {
+    @Override
+    public void run() {
+      totTime.setText(toTime(m.getDuration().toMinutes()));
+    }
+  });
+  
+
+  //Pour s'assurer de ne pas avoir un temps final de 3:34/3:35 par exemple
+  mp.setOnEndOfMedia(new Runnable() {
+    @Override
+    public void run(){
+      currentTime.setText(totTime.getText());
+    }
   });
 
-  // Inorder to jump to the certain part of video
+  //défilement du time slider et actualisation du temps affiché
+  mp.currentTimeProperty().addListener(new InvalidationListener() {
+    public void invalidated(Observable ov)
+    {
+      time.setValue((mp).getCurrentTime().toMillis()/(mp).getTotalDuration().toMillis() * 100);
+      currentTime.setText(toTime(mp.getCurrentTime().toMinutes()));
+    }
+  });
+
+  //déplacer le time slider pour accéder à différents moments de la vidéo
   time.valueProperty().addListener(new InvalidationListener() {
-      public void invalidated(Observable ov)
-      {
-          if (time.isPressed()) { // It would set the time
-              // as specified by user by pressing
-              mp.seek(mp.getMedia().getDuration().multiply(time.getValue() / 100));
-          }
-      }
+    public void invalidated(Observable ov)
+    {
+        if (time.isPressed()) { 
+            mp.seek(mp.getMedia().getDuration().multiply(time.getValue() / 100));
+        }
+    }
   });
 
-    //mv.setRotate(-90); 
-    mp.play();
-  }
+  //adapter la taille du videoPlayer à la fenêtre
+  box.sceneProperty().addListener(new ChangeListener<Scene>() {
+    @Override
+    public void changed(ObservableValue<? extends Scene> observableValue, Scene scene, Scene newScene) {
+      if (scene == null && newScene != null) {
+          mv.fitHeightProperty().bind(newScene.heightProperty().subtract(hbox.heightProperty().add(20)));
+      }
+    }
+  });
+  
+  //lier le slider du volume avec le volume du player
+  slidVol.valueProperty().addListener(new InvalidationListener() {
+    @Override
+    public void invalidated(Observable observable) {
+        mp.setVolume(slidVol.getValue());
+        int print = (int) (slidVol.getValue()*100);
+        volPourc.setText(""+print+"%");
+    }
+  });
+}
 
-  protected void updatesValues()
-  {
-      Platform.runLater(new Runnable() {
-          public void run()
-          {
-              // Updating to the new time value
-              // This will move the slider while running your video
-              time.setValue((mp).getCurrentTime().toMillis()/(mp).getTotalDuration().toMillis() * 100);
-          }
-      });
+  @FXML
+  protected void speedUp(ActionEvent e){
+    if(isSpedUp){
+      mp.setRate(1.0);
+      isSpedUp = false;
+    } else {
+      mp.setRate(2.0);
+      isSpedUp = true;
+    }
   }
 
   @FXML
@@ -100,12 +144,19 @@ public class Control implements Initializable{
     Status status = mp.getStatus();
     if (status == status.PLAYING){
       mp.pause();
+      play.setText(">");
     } else {
       mp.play();
+      play.setText("||");
     }
   }
 
-    
-
+  protected String toTime(double x){
+    String res = "";
+    int tmp = (int) x;
+    int virg = (int) ((x - tmp)*100);
+    res = res+tmp+":"+virg;
+    return res;
+  }
 
 }
