@@ -21,7 +21,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.media.MediaView;
 
-public class Control implements Initializable{
+public class MPControl implements Initializable{
 
   @FXML private VBox box; //le contenant principal
   @FXML private MediaView mv; //mediaView
@@ -37,7 +37,7 @@ public class Control implements Initializable{
 
   boolean isSpedUp = false; //vrai si la vidéo est en x2
  
-  String file = "/Users/noemiehanus/Desktop/forever together/stages/Boca.mp4"; //lien du média
+  String file = "/Users/noemiehanus/Desktop/forever together/stages/a song written easily.mp4"; //lien du média
   Media m; //media à lire
   MediaPlayer mp; //le mediaPlayer
 
@@ -48,7 +48,7 @@ public void initialize(URL arg0, ResourceBundle arg1){
   mp = new MediaPlayer(m);
   mv.setMediaPlayer(mp);
   //rotate la vidéo parce que apparemment elle est jamais dans le bon sens 
-  mv.setRotate(90);
+  mv.setRotate(-90);
   //lancer la vidéo quand le player se lance
   mp.play();
   //mp.setMute(false); 
