@@ -1,3 +1,6 @@
 .vscode/
 lib/
 bin/
+src/boo/
+.DS_Store
+src/todo
