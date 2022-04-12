@@ -7,15 +7,15 @@ public class CompteControl {
     @FXML protected Button b1;
     @FXML protected Button b2;
     @FXML protected Button b3;
-    public String id;
+    public static String id;
 
     @FXML 
     protected void connect(ActionEvent e){
         id = ((Button) e.getSource()).getText();
-        if (id.equals("Anna")){
-            VueSwitch.switchTo(Vue.PASSWORD);
-        } else if (id.equals("Mathéo")){
+        if (id.equals("Mathéo")){
             VueSwitch.switchTo(Vue.ACCUEIL);
+        } else {
+            VueSwitch.switchTo(Vue.PASSWORD);
         }
         
     }
