@@ -2,6 +2,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import javax.swing.Action;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -46,6 +48,11 @@ public class AccountControl implements Initializable{
     @FXML 
     public void affiche(ActionEvent e){
         vbox.setVisible(true);
+    }
+
+    @FXML 
+    public void suppr(ActionEvent e){
+        VueSwitch.switchTo(Vue.SUPPRESSION);
     }
 
     @FXML 

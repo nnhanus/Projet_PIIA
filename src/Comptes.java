@@ -18,7 +18,7 @@ public class Comptes {
             getUsers = Database.prepareStatement("SELECT name FROM compte");
             getType = Database.prepareStatement("SELECT status FROM compte WHERE name = ?");
             newCompte = Database.prepareStatement("INSERT INTO compte(name, password, status) VALUES (?, ?, ?)");
-            supprCompte = Database.prepareStatement("DELETE * FROM compte WHERE name = ?");
+            supprCompte = Database.prepareStatement("DELETE FROM compte WHERE name = ?");
         } catch (SQLException e){
             System.out.println("Erreur");
         }
@@ -27,7 +27,7 @@ public class Comptes {
     public static void deleteCompte(String nom){
         try {
             supprCompte.setString(1, nom);
-            supprCompte.executeQuery();
+            supprCompte.executeUpdate();
         } catch (SQLException e) {}
         
     }
