@@ -44,7 +44,8 @@ public class CompteControl implements Initializable {
         try {
             int type = Comptes.getType(id);
             if (type == 2){
-                VueSwitch.switchTo(Vue.ACCUEIL);
+                //VueSwitch.switchTo(Vue.ACCUEIL);
+                VueSwitch.switchTo(Vue.VIDINFO);
             } else {
                 VueSwitch.switchTo(Vue.PASSWORD);
             }

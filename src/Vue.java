@@ -7,7 +7,8 @@ public enum Vue {
     ACCOUNT("fxml/account.fxml"),
     CREATION("fxml/ajoutcompte.fxml"),
     CREAT_ENF("fxml/ajoutEnfant.fxml"),
-    SUPPRESSION("fxml/suppression.fxml");
+    SUPPRESSION("fxml/suppression.fxml"),
+    VIDINFO("fxml/videoInfo.fxml");
 
     private String fileName;
 

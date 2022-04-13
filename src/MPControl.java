@@ -37,7 +37,7 @@ public class MPControl implements Initializable{
 
   boolean isSpedUp = false; //vrai si la vidéo est en x2
  
-  String file = "/Users/noemiehanus/Desktop/forever together/stages/a song written easily.mp4"; //lien du média
+  public static String file; //lien du média
   Media m; //media à lire
   MediaPlayer mp; //le mediaPlayer
 
