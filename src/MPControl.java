@@ -51,7 +51,6 @@ public void initialize(URL arg0, ResourceBundle arg1){
   mv.setRotate(-90);
   //lancer la vidéo quand le player se lance
   mp.play();
-  //mp.setMute(false); 
 
   //gestion du volume par rapport au slider
   //Comme le volume de media player est entre 0 et 1 on ramène le volume entre 0 et 1

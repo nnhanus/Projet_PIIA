@@ -21,6 +21,7 @@ public class PasswordControl {
         } else {
             Label error = new Label("Identifiant ou mot de passe incorrect");
             vbox.getChildren().add(error);
+            pw.setText("");
         }
     }   
 }

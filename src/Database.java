@@ -1,4 +1,3 @@
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -42,7 +41,6 @@ public class Database {
     public static void close() {
         try {
             con.close();
-            System.out.println("close");
         } catch (SQLException e) {
 
         }
@@ -110,7 +108,7 @@ public class Database {
             statement.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS video ("
                 + "  idv INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + "  idc INTEGER REFERENCES category(idc) NOT NULL,"
+                + "  idc INTEGER REFERENCES category(idc) DEFAULT 0,"
                 + "  name TEXT UNIQUE NOT NULL,"
                 + "  path TEXT NOT NULL)"
             );
@@ -128,8 +126,38 @@ public class Database {
                 + "  idv INTEGER REFERENCES video(idv) ON DELETE CASCADE NOT NULL,"
                 + "  UNIQUE (idu, idv))"
             );
-            
-            // @formatter:on
+
+            statement.executeUpdate(
+                "INSERT INTO category(name, status) VALUES ('default', 0)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO category(name, status) VALUES ('concert', 0)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO video(idc, name, path) VALUES (1, 'Boca', '/Users/noemiehanus/Desktop/forever together/stages/boca.mp4')"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO compte(name, password, status) VALUES ('Anna', 'hello', 0)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO compte(name, password, status) VALUES ('Claude', 'coucou', 0)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO compte(name, password, status) VALUES ('Marie', 'chevre', 1)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO compte(name, password, status) VALUES ('Pierre', 'brownie', 1)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO compte(name, password, status) VALUES ('Mathéo', ' ', 2)"
+            );
 
             statement.close();
         }
@@ -137,12 +165,13 @@ public class Database {
     
 
     public static void test() throws SQLException{
-        Statement stmt = con.createStatement();		      
+        /*Statement stmt = con.createStatement();		      
          // Execute a query
          System.out.println("Inserting records into the table...");          
-         String sql = "INSERT INTO compte(name, password, status) VALUES ('Mathéo', ' ', 2)";
-         stmt.executeUpdate(sql);
-        /* String QUERY = "SELECT idu, name, password, status FROM compte";
+         String sql = "INSERT INTO category(idc, status) VALUES ('Concert', 0)";
+         //String sql = "DELETE FROM category WHERE idc = 0";
+         stmt.executeUpdate(sql);*/
+         String QUERY = "SELECT idu, name, password, status FROM compte";
          Statement stmt = con.createStatement();
          ResultSet rs = stmt.executeQuery(QUERY);		      
          while(rs.next()){
@@ -151,7 +180,7 @@ public class Database {
             System.out.print(", Nom: " + rs.getString("name"));
             System.out.print(", PW: " + rs.getString("password"));
             System.out.println(", Status: " + rs.getString("status"));
-         }*/
+         }
     }
 }
 
