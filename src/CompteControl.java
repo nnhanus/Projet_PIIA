@@ -30,7 +30,6 @@ public class CompteControl implements Initializable {
             for (String c : comptes){
                 Button b = new Button(c);
                 liste.add(b);
-                System.out.println(c);
                 b.setOnAction(e -> {
                     id = c;
                     change();

@@ -7,13 +7,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AjoutCompteControl">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AjoutCompteControl">
    <children>
       <Label text="Création de compte">
          <VBox.margin>
             <Insets bottom="15.0" />
          </VBox.margin></Label>
-      <HBox>
+      <HBox alignment="CENTER">
          <children>
             <Label text="Nom : " />
             <TextField fx:id="nom" />

@@ -8,22 +8,22 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="box" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AjoutCompteControl">
+<VBox fx:id="box" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AjoutCompteControl">
    <children>
       <Label text="Création de compte" />
-      <HBox>
+      <HBox alignment="CENTER">
          <children>
             <Label text="Nom : " />
             <TextField fx:id="nom" />
          </children>
       </HBox>
-      <HBox>
+      <HBox alignment="CENTER">
          <children>
             <Label text="Type : " />
             <TextField fx:id="type" />
          </children>
       </HBox>
-      <HBox fx:id="pass">
+      <HBox fx:id="pass" alignment="CENTER">
          <children>
             <Label text="Mot de passe : " />
             <PasswordField fx:id="mdp" />
