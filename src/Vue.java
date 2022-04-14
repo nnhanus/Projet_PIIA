@@ -1,9 +1,14 @@
 public enum Vue {
 
-    COMPTE("compte.fxml"),
-    ACCUEIL("accueil.fxml"),
-    MP("med2.fxml"),
-    PASSWORD("password.fxml");
+    COMPTE("fxml/compteslist.fxml"),
+    ACCUEIL("fxml/accueil.fxml"),
+    MP("fxml/med2.fxml"),
+    PASSWORD("fxml/password.fxml"),
+    ACCOUNT("fxml/account.fxml"),
+    CREATION("fxml/ajoutcompte.fxml"),
+    CREAT_ENF("fxml/ajoutEnfant.fxml"),
+    SUPPRESSION("fxml/suppression.fxml"),
+    VIDINFO("fxml/videoInfo.fxml");
 
     private String fileName;
 

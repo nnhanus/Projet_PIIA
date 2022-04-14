@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AccueilControl">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AccueilControl">
    <children>
       <VBox>
          <children>
@@ -58,6 +58,7 @@
          </children>
       </VBox>
       <Button fx:id="deco" mnemonicParsing="false" onAction="#deco" text="Déconnexion" />
+      <Button fx:id="com" mnemonicParsing="false" onAction="#switchCompte" text="Mon Compte" />
    </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="50.0" />
