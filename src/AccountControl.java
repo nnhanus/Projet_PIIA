@@ -45,6 +45,11 @@ public class AccountControl implements Initializable{
         
     }
 
+    @FXML
+    public void back(){
+        VueSwitch.switchTo(Vue.VIDINFO);
+    }
+
     @FXML 
     public void affiche(ActionEvent e){
         vbox.setVisible(true);

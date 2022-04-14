@@ -28,5 +28,9 @@ public class AjoutCompteControl {
         Comptes.newCompte(nom.getText(), " ", "2");
         VueSwitch.switchTo(Vue.ACCOUNT);
     }
+
+    @FXML protected void back(){
+        VueSwitch.switchTo(Vue.ACCOUNT);
+    }
     
 }

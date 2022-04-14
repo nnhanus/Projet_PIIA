@@ -1,32 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="box" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CompteControl">
+<VBox fx:id="box" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CompteControl">
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choisir un compte">
          <VBox.margin>
             <Insets bottom="15.0" />
          </VBox.margin>
       </Text>
-      <Button fx:id="b1" mnemonicParsing="false" onAction="#connect" text="Anna">
-         <VBox.margin>
-            <Insets bottom="15.0" />
-         </VBox.margin>
-      </Button>
-      <Button fx:id="b2" mnemonicParsing="false" onAction="#connect" text="Mathéo">
-         <VBox.margin>
-            <Insets bottom="15.0" />
-         </VBox.margin>
-      </Button>
-      <Button fx:id="b3" mnemonicParsing="false" onAction="#connect" text="Marie">
-         <VBox.margin>
-            <Insets bottom="15.0" />
-         </VBox.margin>
-      </Button>
+      <ScrollPane prefHeight="200.0" prefWidth="200.0">
+        <content>
+          <AnchorPane fx:id="pane" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+        </content>
+      </ScrollPane>
    </children>
    <padding>
       <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

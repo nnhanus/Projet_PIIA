@@ -10,6 +10,11 @@
 
 <VBox fx:id="box" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AjoutCompteControl">
    <children>
+      <HBox alignment="CENTER_RIGHT">
+         <children>
+            <Button mnemonicParsing="false" onAction="#back" text="Retour" />
+         </children>
+      </HBox>
       <Label text="Création de compte" />
       <HBox alignment="CENTER">
          <children>

@@ -15,6 +15,11 @@ public class PasswordControl {
     @FXML protected VBox vbox;
 
     @FXML
+    protected void back(){
+        VueSwitch.switchTo(Vue.COMPTE);
+    }
+
+    @FXML
     protected void passTest(ActionEvent e) throws SQLException{
         if(Comptes.checkPW(CompteControl.id, pw.getText())){
            // VueSwitch.switchTo(Vue.ACCUEIL); //on se connecte

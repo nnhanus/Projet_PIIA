@@ -35,5 +35,10 @@ public class SuppControl implements Initializable{
     public void change(){
         VueSwitch.switchTo(Vue.ACCOUNT);
     }
+
+    @FXML 
+    protected void back(){
+        VueSwitch.switchTo(Vue.ACCOUNT);
+    }
     
 }

@@ -101,6 +101,7 @@ public class Database {
                 + "  idu INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "  name TEXT UNIQUE NOT NULL,"
                 + "  password TEXT NOT NULL,"
+                + "  photo TEXT DEFAULT '/avatar/default.png',"
                 + "  status INTEGER NOT NULL CHECK (0 <= status AND status <= 3),"
                 + "  CHECK (password NOT LIKE '' OR status = 3))"
             );
@@ -123,8 +124,8 @@ public class Database {
             statement.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS authorization ("
                 + "  idu INTEGER REFERENCES user(idu) ON DELETE CASCADE NOT NULL,"
-                + "  idv INTEGER REFERENCES video(idv) ON DELETE CASCADE NOT NULL,"
-                + "  UNIQUE (idu, idv))"
+                + "  idc INTEGER REFERENCES video(idc) ON DELETE CASCADE NOT NULL,"
+                + "  UNIQUE (idu, idc))"
             );
 
             statement.executeUpdate(
@@ -140,23 +141,24 @@ public class Database {
             );
 
             statement.executeUpdate(
-                "INSERT INTO compte(name, password, status) VALUES ('Anna', 'hello', 0)"
+                "INSERT INTO compte(name, password, photo, status) VALUES ('Anna', 'hello', '/avatar/default.png', 0)"
             );
 
             statement.executeUpdate(
-                "INSERT INTO compte(name, password, status) VALUES ('Claude', 'coucou', 0)"
+                "INSERT INTO compte(name, password, photo, status) VALUES ('Claude', 'coucou', '/avatar/default.png', 0)"
+            );
+            System.out.println("hello");
+
+            statement.executeUpdate(
+                "INSERT INTO compte(name, password, photo, status) VALUES ('Marie', 'chevre', '/avatar/marie.png',  1)"
             );
 
             statement.executeUpdate(
-                "INSERT INTO compte(name, password, status) VALUES ('Marie', 'chevre', 1)"
+                "INSERT INTO compte(name, password, photo, status) VALUES ('Pierre', 'brownie', '/avatar/pierre.png',  1)"
             );
 
             statement.executeUpdate(
-                "INSERT INTO compte(name, password, status) VALUES ('Pierre', 'brownie', 1)"
-            );
-
-            statement.executeUpdate(
-                "INSERT INTO compte(name, password, status) VALUES ('Mathéo', ' ', 2)"
+                "INSERT INTO compte(name, password, photo, status) VALUES ('Mathéo', ' ', '/avatar/matheo.png', 2)"
             );
 
             statement.close();
@@ -165,13 +167,7 @@ public class Database {
     
 
     public static void test() throws SQLException{
-        /*Statement stmt = con.createStatement();		      
-         // Execute a query
-         System.out.println("Inserting records into the table...");          
-         String sql = "INSERT INTO category(idc, status) VALUES ('Concert', 0)";
-         //String sql = "DELETE FROM category WHERE idc = 0";
-         stmt.executeUpdate(sql);*/
-         String QUERY = "SELECT idu, name, password, status FROM compte";
+        String QUERY = "SELECT idu, name, password, photo, status FROM compte";
          Statement stmt = con.createStatement();
          ResultSet rs = stmt.executeQuery(QUERY);		      
          while(rs.next()){
@@ -179,6 +175,7 @@ public class Database {
             System.out.print("ID: " + rs.getInt("idu"));
             System.out.print(", Nom: " + rs.getString("name"));
             System.out.print(", PW: " + rs.getString("password"));
+            System.out.println((", Photo: " + rs.getString("photo")));
             System.out.println(", Status: " + rs.getString("status"));
          }
     }

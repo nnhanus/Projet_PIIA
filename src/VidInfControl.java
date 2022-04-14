@@ -28,6 +28,16 @@ public class VidInfControl implements Initializable {
         VueSwitch.switchTo(Vue.MP);
     }
 
+    @FXML 
+    protected void back(){
+       // VueSwitch.switchTo(Vue.ACCUEIL);
+    }
+
+    @FXML 
+    protected void account(){
+        VueSwitch.switchTo(Vue.ACCOUNT);
+    }
+
 
     
 }

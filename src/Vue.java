@@ -1,6 +1,6 @@
 public enum Vue {
 
-    COMPTE("fxml/compteslist.fxml"),
+    COMPTE("fxml/compte.fxml"),
     ACCUEIL("fxml/accueil.fxml"),
     MP("fxml/med2.fxml"),
     PASSWORD("fxml/password.fxml"),

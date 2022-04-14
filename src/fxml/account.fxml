@@ -12,6 +12,11 @@
          <children>
             <Label text="Compte : " />
             <Label fx:id="nomC" />
+            <HBox alignment="TOP_RIGHT">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#back" text="Retour" />
+               </children>
+            </HBox>
          </children>
          <VBox.margin>
             <Insets bottom="15.0" right="15.0" top="15.0" />
