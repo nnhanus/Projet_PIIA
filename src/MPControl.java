@@ -150,6 +150,11 @@ public void initialize(URL arg0, ResourceBundle arg1){
     }
   }
 
+  @FXML 
+  protected void back(){
+    VueSwitch.switchTo(Vue.VIDINFO);
+  }
+
   protected String toTime(double x){
     String res = "";
     int tmp = (int) x;

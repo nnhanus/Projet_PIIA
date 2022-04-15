@@ -22,8 +22,8 @@ public class PasswordControl {
     @FXML
     protected void passTest(ActionEvent e) throws SQLException{
         if(Comptes.checkPW(CompteControl.id, pw.getText())){
-           // VueSwitch.switchTo(Vue.ACCUEIL); //on se connecte
-           VueSwitch.switchTo(Vue.VIDINFO);
+           VueSwitch.switchTo(Vue.ACCUEIL); //on se connecte
+           //VueSwitch.switchTo(Vue.VIDINFO);
         } else {
             Label error = new Label("Identifiant ou mot de passe incorrect");
             vbox.getChildren().add(error);

@@ -28,7 +28,7 @@ public class CompteControl implements Initializable {
     public static String id;
     protected static ArrayList<String> comptes;
     //@FXML protected HBox hbox;
-    protected static PreparedStatement getCompte;
+    public static PreparedStatement getCompte;
     @FXML VBox pane;
 
     static{
@@ -77,8 +77,8 @@ public class CompteControl implements Initializable {
         try {
             int type = Comptes.getType(id);
             if (type == 2){
-                //VueSwitch.switchTo(Vue.ACCUEIL);
-                VueSwitch.switchTo(Vue.VIDINFO);
+                VueSwitch.switchTo(Vue.ACCUEIL);
+                //VueSwitch.switchTo(Vue.VIDINFO);
             } else {
                 VueSwitch.switchTo(Vue.PASSWORD);
             }

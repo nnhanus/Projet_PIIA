@@ -47,7 +47,7 @@ public class AccountControl implements Initializable{
 
     @FXML
     public void back(){
-        VueSwitch.switchTo(Vue.VIDINFO);
+        VueSwitch.switchTo(Vue.ACCUEIL);
     }
 
     @FXML 

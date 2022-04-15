@@ -10,6 +10,11 @@
 
 <VBox fx:id="box" alignment="CENTER" minHeight="0.0" minWidth="0.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MPControl">
    <children>
+      <HBox alignment="TOP_RIGHT">
+         <children>
+            <Button mnemonicParsing="false" onAction="#back" text="Retour" />
+         </children>
+      </HBox>
       <MediaView fx:id="mv" />
       <Slider fx:id="time" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="181.0" style="-fx-cursor: hand;">
          <padding>
