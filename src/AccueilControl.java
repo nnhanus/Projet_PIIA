@@ -29,26 +29,26 @@ public class AccueilControl implements Initializable{
     @FXML protected HBox HBoxComptes;
     @FXML protected VBox VBoxCat;
 	@FXML protected VBox VBoxComptes;
-	protected static PreparedStatement getCategories;
-	protected static PreparedStatement getVideos;
 	protected static PreparedStatement getCompte;
+	protected static PreparedStatement getMinia;
 
 	static {
 		try{
-			getCategories = Database.prepareStatement("SELECT * FROM category");
-			getVideos = Database.prepareStatement("SELECT * FROM video WHERE idc = ?");
 			getCompte = Database.prepareStatement("SELECT * FROM compte WHERE name = ?");
-		} catch (SQLException e){}
+			getMinia = Database.prepareStatement("SELECT mini FROM video WHERE name = ?");
+		} catch (SQLException e){
+			System.err.println(e.getMessage() + " " + e.getCause());;
+		}
 	}
     
-    private List<String> categories = Arrays.asList(new String[] {"Famille", "Horreur", "Animation"});
+   // private List<String> categories = Arrays.asList(new String[] {"Famille", "Horreur", "Animation"});
 
     @FXML 
     protected void deco(ActionEvent e){
         VueSwitch.switchTo(Vue.COMPTE); 
     }
 
-    @FXML protected void switchCompte(ActionEvent e){
+    @FXML protected void switchCompte(){
         VueSwitch.switchTo(Vue.ACCOUNT);
     }
     
@@ -71,12 +71,7 @@ public class AccueilControl implements Initializable{
     }*/
     
     protected void  affichageComptes() {
-    	/*for (int i = 0; i < 2; i++) {		// il faudrait parcourir les comptes
-        	Button button = new Button("test" + i);
-        	//HBoxHistorique.setAlignment(Pos.BOTTOM_RIGHT);
-        	HBoxComptes.getChildren().add(button);*/
-		
-		try{
+    	try{
 			ArrayList<String> comptes = Comptes.getUsers();
 			for (String c : comptes){
 				getCompte.setString(1, c);
@@ -95,8 +90,9 @@ public class AccueilControl implements Initializable{
 					ty.setText("Enfant");
 				}
 				VBox v = new VBox();
-				v.setPadding(new Insets(10,10,10,10));
+				v.setPadding(new Insets(10,0,10,10));
 				Button b = new Button(c);
+				b.setMinWidth(50);
 				v.setAlignment(Pos.TOP_CENTER);
 				v.getChildren().addAll(b, ty);
 				h.setAlignment(Pos.TOP_CENTER);
@@ -108,18 +104,54 @@ public class AccueilControl implements Initializable{
 		} catch (SQLException ex){}
 
 	}
-
-    	
     
     @FXML protected void affichageCat() {
-    	for (String categorie : categories) {				//on pourrait faire une choice box plutot, jsp
-    		Label label = new Label(categorie + ">");
-    		HBox hbox = new HBox();
-    		Button button = new Button("test");
-    		hbox.getChildren().add(button);
-    		VBoxCat.getChildren().addAll(label, hbox);	
-    	}
+		ArrayList<String> cats = Video.getCategories();
+		for (int i = 0; i < cats.size(); i++){
+			String nom = cats.get(i);
+			Button cat = new Button(nom);
+			VBox tmp = new VBox();
+			tmp.setPadding(new Insets(15, 0, 0, 15));
+			tmp.getChildren().add(cat);
+			VBox vi = new VBox();
+			ArrayList<String> vids = Video.getVidFroCat(nom);
+			for (int j = 0; j < vids.size(); j++){
+				String nomVid = vids.get(j);
+				Label nameVid = new Label(nomVid);
+				vi.setPadding(new Insets(10,0,20,0));
+				vi.getChildren().add(nameVid);
+				try {
+					getMinia.setString(1, nomVid);
+					ResultSet min = getMinia.executeQuery();
+					ImageView mini = new ImageView();
+					mini.setFitHeight(50);
+					mini.setFitWidth(50);
+					mini.setImage(new Image(min.getString("mini")));
+					vi.getChildren().add(mini);
+				} catch (SQLException e1) {
+					System.err.println(e1.getMessage() + " " + e1.getCause());;
+				}
+				nameVid.setOnMouseClicked(e -> {
+					VidInfControl.nom_vid = nomVid;
+					VueSwitch.switchTo(Vue.VIDINFO);
+				});
+			}
+			cat.setOnAction(e -> {
+				CatInfoControl.categorie = nom;
+				changeCat();	
+			});
+			tmp.getChildren().add(vi);
+			VBoxCat.getChildren().add(tmp);
+		}
     }
+
+	protected void changeCat(){
+		VueSwitch.switchTo(Vue.CAT_INFO);
+	}
+
+	@FXML protected void switchCat(){}
+
+	@FXML protected void ajout(){}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

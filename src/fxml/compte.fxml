@@ -12,7 +12,7 @@
             <Insets bottom="15.0" />
          </VBox.margin>
       </Text>
-      <ScrollPane minHeight="0.0" minWidth="0.0">
+      <ScrollPane minHeight="100.0" minWidth="200.0">
          <content>
             <VBox fx:id="pane" minHeight="0.0" minWidth="0.0" />
          </content>

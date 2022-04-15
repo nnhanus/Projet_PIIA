@@ -6,32 +6,79 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AccueilControl">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AccueilControl">
    <children>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
          <children>
             <VBox fx:id="VBoxCat">
                <children>
-                  <Button mnemonicParsing="false" onAction="#affichageCat" text="Catégories &gt;" />
+                  <Button mnemonicParsing="false" onAction="#switchCat" text="Catégories &gt;">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" />
+                     </VBox.margin>
+                  </Button>
                </children>
+               <VBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" />
+               </VBox.margin>
             </VBox>
             <VBox fx:id="VBoxComptes">
                <children>
-                  <Button mnemonicParsing="false" text="Comptes" />
-                  <HBox fx:id="HBoxComptes" prefHeight="135.0" prefWidth="200.0" />
+                  <Button mnemonicParsing="false" text="Comptes">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <HBox fx:id="HBoxComptes" prefHeight="135.0" prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </HBox>
                </children>
+               <VBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </VBox.margin>
             </VBox>
          </children>
          <HBox.margin>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </HBox.margin>
+         <padding>
+            <Insets top="15.0" />
+         </padding>
       </VBox>
-      <VBox>
+      <VBox minWidth="100.0">
          <children>
-            <Button fx:id="deco" mnemonicParsing="false" onAction="#deco" text="Déconnexion" />
-            <Button fx:id="com" mnemonicParsing="false" onAction="#switchCompte" text="Mon Compte" />
-            <TextField text="Recherche" />
+            <HBox>
+               <children>
+                  <Button fx:id="com" mnemonicParsing="false" onAction="#switchCompte" text="Mon Compte" />
+                  <Button fx:id="deco" mnemonicParsing="false" onAction="#deco" text="Déconnexion">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+            <TextField text="Recherche">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </TextField>
+            <Button mnemonicParsing="false" onAction="#ajout" text="Ajouter une vidéo">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </Button>
          </children>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+         <padding>
+            <Insets top="15.0" />
+         </padding>
       </VBox>
    </children>
    <padding>

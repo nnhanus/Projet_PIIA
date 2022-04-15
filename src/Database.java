@@ -111,7 +111,8 @@ public class Database {
                 + "  idv INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "  idc INTEGER REFERENCES category(idc) DEFAULT 0,"
                 + "  name TEXT UNIQUE NOT NULL,"
-                + "  path TEXT NOT NULL)"
+                + "  path TEXT NOT NULL,"
+                + "  mini TEXT DEFAULT '/minia/default.png')"
             );
 
             statement.executeUpdate(
@@ -137,7 +138,7 @@ public class Database {
             );
 
             statement.executeUpdate(
-                "INSERT INTO video(idc, name, path) VALUES (1, 'Boca', '/Users/noemiehanus/Desktop/forever together/stages/boca.mp4')"
+                "INSERT INTO video(idc, name, path, mini) VALUES (1, 'Boca', '/Users/noemiehanus/Desktop/forever together/stages/boca.mp4', '/minia/Boca.png')"
             );
 
             statement.executeUpdate(

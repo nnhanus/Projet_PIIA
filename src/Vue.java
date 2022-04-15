@@ -8,7 +8,8 @@ public enum Vue {
     CREATION("fxml/ajoutcompte.fxml"),
     CREAT_ENF("fxml/ajoutEnfant.fxml"),
     SUPPRESSION("fxml/suppression.fxml"),
-    VIDINFO("fxml/videoInfo.fxml");
+    VIDINFO("fxml/videoInfo.fxml"),
+    CAT_INFO("/fxml/catInfo.fxml");
 
     private String fileName;
 

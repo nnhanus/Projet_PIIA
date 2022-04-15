@@ -19,7 +19,7 @@ public class Main extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     //Parent myPane = FXMLLoader.load(getClass().getResource("med2.fxml"));
-    Scene scene = new Scene(new Pane(), 800, 600);
+    Scene scene = new Scene(new Pane(), 1000, 600);
     //scene.setFill(Color.BLACK);
   
     //Database.test();
