@@ -1,4 +1,6 @@
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -8,25 +10,62 @@ import javax.swing.SortingFocusTraversalPolicy;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class SuppControl implements Initializable{
     @FXML protected HBox box;
+    protected static PreparedStatement getCompte;
+    @FXML protected Label sup;
+    @FXML protected VBox valid;
+    private String compteASuppr = "";
+
+    static{
+        try {
+            getCompte = Database.prepareStatement("SELECT * FROM compte WHERE name = ?");
+        } catch (SQLException e) {}
+    }
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        valid.setVisible(false);
         try {
             ArrayList<String> comptes = Comptes.getUsers();
-            ObservableList<Node> liste = box.getChildren();
             for (String c : comptes){
+                getCompte.setString(1, c);
+                ResultSet rs = getCompte.executeQuery();
+                HBox h = new HBox();
+                h.setPadding(new Insets(15, 15, 15, 15));
+                ImageView im = new ImageView();
+                im.setImage(new Image(rs.getString("photo"), 75, 75, false, false)); 
+                //im.setImage(new Image(getClass().getResource(rs.getString("photo")).toString()));
+                Label ty = new Label();
+                if (rs.getInt("status") == 0){
+                    ty.setText("Adulte");
+                } else if (rs.getInt("status") == 1){
+                    ty.setText("Adolescent");
+                } else if (rs.getInt("status") == 2){
+                    ty.setText("Enfant");
+                }
+                VBox v = new VBox();
+                v.setPadding(new Insets(10,10,10,10));
                 Button b = new Button(c);
-                liste.add(b);
-                b.setOnAction(e -> {
-                    Comptes.deleteCompte(c);
-                    change();
-                }) ;
+                v.getChildren().addAll(b, ty);
+                h.getChildren().add(im);
+                h.getChildren().add(v);
+                box.getChildren().add(h);
+                b.setOnAction(e -> { 
+                    valid.setVisible(true);  
+                    compteASuppr = c;
+                    sup.setText("Supprimer " + c + " ?");
+                    
+                });
             }
         } catch (SQLException e) {}
         
@@ -34,6 +73,11 @@ public class SuppControl implements Initializable{
 
     public void change(){
         VueSwitch.switchTo(Vue.ACCOUNT);
+    }
+
+    @FXML protected void suppr(){
+        Comptes.deleteCompte(compteASuppr);
+        change();
     }
 
     @FXML 

@@ -16,8 +16,10 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -27,6 +29,7 @@ public class CompteControl implements Initializable {
     protected static ArrayList<String> comptes;
     //@FXML protected HBox hbox;
     protected static PreparedStatement getCompte;
+    @FXML VBox pane;
 
     static{
         try {
@@ -60,7 +63,7 @@ public class CompteControl implements Initializable {
                 v.getChildren().addAll(b, ty);
                 h.getChildren().add(im);
                 h.getChildren().add(v);
-                box.getChildren().add(h);
+                pane.getChildren().add(h);
                 b.setOnAction(e -> {
                     id = c;
                     change();
