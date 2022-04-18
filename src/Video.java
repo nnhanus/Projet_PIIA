@@ -59,6 +59,16 @@ public class Video {
         }
     }
 
+    public static void ajoutCat(String n){
+        try {
+            ajoutCat.setString(1, n);
+            ajoutCat.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        
+    }
+
     public static void ajoutVidCat(String n, String p, String d){
         try {
             ajoutVidCat.setInt(1, getIDCForNom(CatInfoControl.categorie));
@@ -72,7 +82,7 @@ public class Video {
     public static void suppVid(String n){
         try {
             supprVid.setString(1, n);
-            supprVid.executeQuery();
+            supprVid.executeUpdate();
         } catch (SQLException e) {}
         
     }
@@ -88,7 +98,7 @@ public class Video {
             //complétion de la requête
             ajoutAuthor.setInt(1, idu); 
             ajoutAuthor.setInt(2, idc);
-            ajoutAuthor.executeQuery(); //excecution de la requête
+            ajoutAuthor.executeUpdate(); //excecution de la requête
         } catch (SQLException e) {}
     }
 
@@ -103,7 +113,7 @@ public class Video {
             //complétion de la requête
             supprAuthor.setInt(1, idu);
             supprAuthor.setInt(2, idc);
-            supprAuthor.executeQuery(); //excecution de la requête
+            supprAuthor.executeUpdate(); //excecution de la requête
         } catch (SQLException e) {}
         
 

@@ -85,6 +85,26 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" />
                </VBox.margin>
             </Button>
+            <VBox fx:id="newCat" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="Nouvelle catégorie">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Nom : ">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="catNom" maxWidth="180.0" />
+                  <Button mnemonicParsing="false" onAction="#valCat" text="Valider">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
          </children>
          <HBox.margin>
             <Insets />

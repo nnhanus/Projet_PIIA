@@ -19,6 +19,7 @@ import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -26,8 +27,6 @@ import javafx.scene.layout.VBox;
 
 public class AccueilControl implements Initializable{
     @FXML protected Button deco;
-    /*@FXML protected HBox HBoxHistorique;
-    @FXML protected HBox HBoxAjoutsRecents;*/
     @FXML protected HBox HBoxComptes;
     @FXML protected VBox VBoxCat;
 	@FXML protected VBox VBoxComptes;
@@ -35,6 +34,8 @@ public class AccueilControl implements Initializable{
 	protected static PreparedStatement getMinia;
 	@FXML protected Button ajoutVid;
 	@FXML protected Button ajoutCat;
+	@FXML VBox newCat;
+	@FXML TextField catNom;
 
 	static {
 		try{
@@ -108,7 +109,7 @@ public class AccueilControl implements Initializable{
 				String nomVid = vids.get(j);
 				Label nameVid = new Label(nomVid);
 				vi.setPadding(new Insets(10,0,20,0));
-				vid.setPadding(new Insets(10, 20, 20, 0));
+				vid.setPadding(new Insets(10, 20, 0, 0));
 				vid.getChildren().add(nameVid);
 				try {
 					getMinia.setString(1, nomVid);
@@ -140,17 +141,24 @@ public class AccueilControl implements Initializable{
 		VueSwitch.switchTo(Vue.CAT_INFO);
 	}
 
-	@FXML protected void switchCat(){}
-
 	@FXML protected void ajoutVid(){
 		VueSwitch.switchTo(Vue.AJOUT_VID);
 	}
 
-	@FXML protected void ajoutCat(){}
+	@FXML protected void ajoutCat(){
+		newCat.setVisible(true);
+	}
+
+	@FXML protected void valCat(){
+		Video.ajoutCat(catNom.getText());
+		newCat.setVisible(false);
+		VueSwitch.switchTo(Vue.ACCUEIL); //reload de l'affichage
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		affichageCat();
+		newCat.setVisible(false);
 		try {
 			CompteControl.getCompte.setString(1, CompteControl.id);
 			ResultSet rs = CompteControl.getCompte.executeQuery();

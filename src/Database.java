@@ -223,7 +223,7 @@ public class Database {
     
 
     public static void test() throws SQLException{
-        String QUERY = "SELECT idu, name, password, photo, status FROM compte";
+        /*String QUERY = "SELECT idu, name, password, photo, status FROM compte";
          Statement stmt = con.createStatement();
          ResultSet rs = stmt.executeQuery(QUERY);		      
          while(rs.next()){
@@ -232,6 +232,13 @@ public class Database {
             System.out.print(", PW: " + rs.getString("password"));
             System.out.println((", Photo: " + rs.getString("photo")));
             System.out.println(", Status: " + rs.getString("status"));
+         }*/
+         String QUERY = "SELECT idc, name FROM category";
+         Statement stmt = con.createStatement();
+         ResultSet rs = stmt.executeQuery(QUERY);		      
+         while(rs.next()){
+            System.out.print("ID: " + rs.getInt("idc"));
+            System.out.println(", Nom: " + rs.getString("name"));
          }
     }
 }
