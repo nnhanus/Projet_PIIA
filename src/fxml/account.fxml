@@ -12,6 +12,11 @@
          <children>
             <Label text="Compte : " />
             <Label fx:id="nomC" />
+            <HBox alignment="TOP_RIGHT" layoutX="750.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#back" text="Retour" />
+               </children>
+            </HBox>
          </children>
          <VBox.margin>
             <Insets bottom="15.0" right="15.0" top="15.0" />
@@ -38,10 +43,10 @@
             <Insets bottom="15.0" />
          </VBox.margin>
       </Button>
-      <VBox fx:id="vbox" alignment="CENTER">
+      <VBox fx:id="vbox">
          <children>
             <Label text="Compte Enfant?" />
-            <HBox fx:id="hBox" alignment="CENTER">
+            <HBox fx:id="hBox">
                <children>
                   <Button mnemonicParsing="false" onAction="#creeCompteEnfant" text="Oui">
                      <HBox.margin>

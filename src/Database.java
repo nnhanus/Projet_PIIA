@@ -1,3 +1,4 @@
+import java.nio.file.attribute.UserPrincipal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -94,13 +95,12 @@ public class Database {
        if (!checkTable("authorization")) {
             Statement statement = con.createStatement();
 
-            // @formatter:off
-
             statement.executeUpdate(
                   "CREATE TABLE IF NOT EXISTS compte ("
                 + "  idu INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "  name TEXT UNIQUE NOT NULL,"
                 + "  password TEXT NOT NULL,"
+                + "  photo TEXT DEFAULT '/avatar/default.png',"
                 + "  status INTEGER NOT NULL CHECK (0 <= status AND status <= 3),"
                 + "  CHECK (password NOT LIKE '' OR status = 3))"
             );
@@ -108,56 +108,114 @@ public class Database {
             statement.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS video ("
                 + "  idv INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + "  idc INTEGER REFERENCES category(idc) DEFAULT 0,"
+                + "  idc INTEGER REFERENCES category(idc) DEFAULT 1,"
                 + "  name TEXT UNIQUE NOT NULL,"
-                + "  path TEXT NOT NULL)"
+                + "  path TEXT NOT NULL,"
+                + "  descri TEXT,"
+                + "  mini TEXT DEFAULT '/minia/default.png')"
             );
 
             statement.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS category ("
                 + "  idc INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + "  name TEXT UNIQUE NOT NULL,"
-                + "  status INTEGER NOT NULL CHECK (0 <= status AND status <= 3))"
+                + "  name TEXT UNIQUE NOT NULL)"
             );
 
             statement.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS authorization ("
                 + "  idu INTEGER REFERENCES user(idu) ON DELETE CASCADE NOT NULL,"
-                + "  idv INTEGER REFERENCES video(idv) ON DELETE CASCADE NOT NULL,"
-                + "  UNIQUE (idu, idv))"
+                + "  idc INTEGER REFERENCES video(idc) ON DELETE CASCADE NOT NULL,"
+                + "  UNIQUE (idu, idc))"
             );
 
             statement.executeUpdate(
-                "INSERT INTO category(name, status) VALUES ('default', 0)"
+                "INSERT INTO category(name) VALUES ('Default')"
             );
 
             statement.executeUpdate(
-                "INSERT INTO category(name, status) VALUES ('concert', 0)"
+                "INSERT INTO category(name) VALUES ('Concert')"
             );
 
             statement.executeUpdate(
-                "INSERT INTO video(idc, name, path) VALUES (1, 'Boca', '/Users/noemiehanus/Desktop/forever together/stages/boca.mp4')"
+                "INSERT INTO category(name) VALUES ('Animation')"
             );
 
             statement.executeUpdate(
-                "INSERT INTO compte(name, password, status) VALUES ('Anna', 'hello', 0)"
+                "INSERT INTO category(name) VALUES ('Cours Physique')"
             );
 
             statement.executeUpdate(
-                "INSERT INTO compte(name, password, status) VALUES ('Claude', 'coucou', 0)"
+                "INSERT INTO video(idc, name, path, descri, mini) VALUES (2, 'Boca [Live]', 'src/video/Boca.mp4', 'Concert Dreamcatcher Boca', '/minia/Boca.png')"
             );
 
             statement.executeUpdate(
-                "INSERT INTO compte(name, password, status) VALUES ('Marie', 'chevre', 1)"
+                "INSERT INTO video(idc, name, path, descri, mini) VALUES (4, 'Cours Physique 17.3.20', 'src/video/20200317CoursPhys103a_Chap5_part0_1_2_zoom_0.mp4', 'Cours physique 17 mars 2020', '/minia/cours1.png')"
             );
 
             statement.executeUpdate(
-                "INSERT INTO compte(name, password, status) VALUES ('Pierre', 'brownie', 1)"
+                "INSERT INTO video(idc, name, path, descri, mini) VALUES (4, 'TD Physique 21.3.20', 'src/video/20200321_TD_Phys103a_Chap5_rapide_OBS_hdole.mp4', 'TD physique du 21 mars 2020', '/minia/cours2.png')"
             );
 
             statement.executeUpdate(
-                "INSERT INTO compte(name, password, status) VALUES ('Mathéo', ' ', 2)"
+                "INSERT INTO video(idc, name, path, descri, mini) VALUES (3, 'Stark Raven Mad', 'src/video/Stark Raven Mad _ Ever_After_High.mp4', 'Ever After High, saison 1, épisode 1, en anglais', '/minia/eah.png')"
             );
+
+            statement.executeUpdate(
+                "INSERT INTO video(idc, name, path, descri, mini) VALUES (3, 'True Reflections', 'src/video/True Reflections _ Ever After High.mp4', 'Ever After High, saison 1, épisode 2, en anglais', '/minia/eah.png')"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO compte(name, password, photo, status) VALUES ('Anna', 'hello', '/avatar/default.png', 0)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO compte(name, password, photo, status) VALUES ('Claude', 'coucou', '/avatar/default.png', 0)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO compte(name, password, photo, status) VALUES ('Marie', 'chevre', '/avatar/marie.png',  1)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO compte(name, password, photo, status) VALUES ('Pierre', 'brownie', '/avatar/pierre.png',  1)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO compte(name, password, photo, status) VALUES ('Mathéo', ' ', '/avatar/matheo.png', 2)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO authorization(idu, idc) VALUES  (1, 1)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO authorization(idu, idc) VALUES  (3, 2)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO authorization(idu, idc) VALUES  (2, 1)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO authorization(idu, idc) VALUES  (3, 1)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO authorization(idu, idc) VALUES  (4, 1)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO authorization(idu, idc) VALUES  (5, 1)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO authorization(idu, idc) VALUES  (5, 3)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO authorization(idu, idc) VALUES  (4, 4)"
+            );
+
 
             statement.close();
         }
@@ -165,21 +223,22 @@ public class Database {
     
 
     public static void test() throws SQLException{
-        /*Statement stmt = con.createStatement();		      
-         // Execute a query
-         System.out.println("Inserting records into the table...");          
-         String sql = "INSERT INTO category(idc, status) VALUES ('Concert', 0)";
-         //String sql = "DELETE FROM category WHERE idc = 0";
-         stmt.executeUpdate(sql);*/
-         String QUERY = "SELECT idu, name, password, status FROM compte";
+        /*String QUERY = "SELECT idu, name, password, photo, status FROM compte";
          Statement stmt = con.createStatement();
          ResultSet rs = stmt.executeQuery(QUERY);		      
          while(rs.next()){
-            //Display values
             System.out.print("ID: " + rs.getInt("idu"));
             System.out.print(", Nom: " + rs.getString("name"));
             System.out.print(", PW: " + rs.getString("password"));
+            System.out.println((", Photo: " + rs.getString("photo")));
             System.out.println(", Status: " + rs.getString("status"));
+         }*/
+         String QUERY = "SELECT idc, name FROM category";
+         Statement stmt = con.createStatement();
+         ResultSet rs = stmt.executeQuery(QUERY);		      
+         while(rs.next()){
+            System.out.print("ID: " + rs.getInt("idc"));
+            System.out.println(", Nom: " + rs.getString("name"));
          }
     }
 }

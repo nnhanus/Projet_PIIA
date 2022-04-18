@@ -3,64 +3,115 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AccueilControl">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AccueilControl">
    <children>
-      <VBox>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="565.0">
          <children>
-            <Label text="Historique &gt;">
+            <VBox prefHeight="436.0" prefWidth="489.0">
+               <children>
+                  <Label text="Catégories">
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <ScrollPane prefHeight="392.0" prefWidth="489.0">
+                     <content>
+                        <VBox fx:id="VBoxCat" prefHeight="375.0" prefWidth="488.0" />
+                     </content>
+                  </ScrollPane>
+               </children>
                <VBox.margin>
-                  <Insets bottom="50.0" left="15.0" right="15.0" top="15.0" />
+                  <Insets bottom="15.0" left="15.0" right="15.0" />
                </VBox.margin>
-            </Label>
-            <Label text="Ajouts récents &gt;">
+            </VBox>
+            <VBox fx:id="VBoxComptes" prefHeight="122.0" prefWidth="489.0" VBox.vgrow="NEVER">
+               <children>
+                  <Button mnemonicParsing="false" text="Comptes">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <HBox fx:id="HBoxComptes" prefHeight="338.0" prefWidth="469.0">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
                <VBox.margin>
-                  <Insets bottom="50.0" left="15.0" right="15.0" top="15.0" />
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
-            </Label>
-            <Label text="Comptes">
-               <VBox.margin>
-                  <Insets bottom="50.0" left="15.0" right="15.0" top="15.0" />
-               </VBox.margin>
-            </Label>
+            </VBox>
          </children>
          <HBox.margin>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            <Insets bottom="15.0" left="15.0" right="15.0" />
          </HBox.margin>
       </VBox>
-      <VBox prefHeight="200.0" prefWidth="100.0">
-         <HBox.margin>
-            <Insets bottom="15.0" left="100.0" right="15.0" top="15.0" />
-         </HBox.margin>
+      <VBox alignment="TOP_RIGHT" minWidth="100.0" prefHeight="530.0" prefWidth="257.0" HBox.hgrow="ALWAYS">
          <children>
-            <Label text="Catégories &gt;">
+            <HBox alignment="TOP_RIGHT">
+               <children>
+                  <Button fx:id="com" mnemonicParsing="false" onAction="#switchCompte" text="Mon Compte" />
+                  <Button fx:id="deco" mnemonicParsing="false" onAction="#deco" text="Déconnexion">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+            <TextField maxWidth="190.0" prefHeight="26.0" prefWidth="141.0" text="Recherche" VBox.vgrow="NEVER">
                <VBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
                </VBox.margin>
-            </Label>
-            <Label text="Famille &gt;">
+            </TextField>
+            <Button fx:id="ajoutVid" maxWidth="133.0" mnemonicParsing="false" onAction="#ajoutVid" text="Ajouter une vidéo">
                <VBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
                </VBox.margin>
-            </Label>
-            <Label text="Horreur &gt;">
+            </Button>
+            <Button fx:id="ajoutCat" maxWidth="133.0" mnemonicParsing="false" onAction="#ajoutCat" text="Ajouter une catégorie">
                <VBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
                </VBox.margin>
-            </Label>
-            <Label text="Animation &gt;">
-               <VBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" />
-               </VBox.margin>
-            </Label>
+            </Button>
+            <VBox fx:id="newCat" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="Nouvelle catégorie">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Nom : ">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="catNom" maxWidth="180.0" />
+                  <Button mnemonicParsing="false" onAction="#valCat" text="Valider">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
          </children>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
       </VBox>
-      <Button fx:id="deco" mnemonicParsing="false" onAction="#deco" text="Déconnexion" />
-      <Button fx:id="com" mnemonicParsing="false" onAction="#switchCompte" text="Mon Compte" />
    </children>
    <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="50.0" />
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
 </HBox>
