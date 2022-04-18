@@ -15,14 +15,18 @@ public class VueSwitch {
         scene = s;
     }
 
+    /**
+     * Change de la vue actuelle vers la vue vers la vue souhaitée
+     * @param vue
+     */
     public static void switchTo(Vue vue){
-        if (scene == null){
+        if (scene == null){ 
             System.out.println("pas de scene");
             return;
         }
         try{
-            Parent root = FXMLLoader.load(Vue.class.getResource(vue.getFileName()));
-            scene.setRoot(root);
+            Parent root = FXMLLoader.load(Vue.class.getResource(vue.getFileName())); //charge la vue souhaitée
+            scene.setRoot(root); 
         } catch (IOException e){
             e.printStackTrace();
         }

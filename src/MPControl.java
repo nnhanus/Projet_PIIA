@@ -48,7 +48,7 @@ public void initialize(URL arg0, ResourceBundle arg1){
   mp = new MediaPlayer(m);
   mv.setMediaPlayer(mp);
   //rotate la vidéo parce que apparemment elle est jamais dans le bon sens 
-  mv.setRotate(-90);
+  mv.setRotate(90);
   //lancer la vidéo quand le player se lance
   mp.play();
 
@@ -152,6 +152,7 @@ public void initialize(URL arg0, ResourceBundle arg1){
 
   @FXML 
   protected void back(){
+    mp.stop();
     VueSwitch.switchTo(Vue.VIDINFO);
   }
 

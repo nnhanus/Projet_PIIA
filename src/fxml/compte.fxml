@@ -5,14 +5,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="box" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CompteControl">
+<VBox fx:id="box" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CompteControl">
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choisir un compte">
          <VBox.margin>
             <Insets bottom="15.0" />
          </VBox.margin>
       </Text>
-      <ScrollPane minHeight="100.0" minWidth="200.0">
+      <ScrollPane minHeight="100.0" minWidth="200.0" prefHeight="509.0" prefWidth="770.0">
          <content>
             <VBox fx:id="pane" minHeight="0.0" minWidth="0.0" />
          </content>

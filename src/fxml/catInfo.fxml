@@ -6,29 +6,41 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<VBox xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CatInfoControl">
+<VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CatInfoControl">
    <children>
-      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+      <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="41.0" prefWidth="837.0">
          <children>
-            <Label fx:id="cate">
+            <Button fx:id="aj" mnemonicParsing="false" onAction="#ajout" text="Ajouter une vidéo" HBox.hgrow="ALWAYS" />
+            <Button mnemonicParsing="false" onAction="#authorSwitch" text="Authoriser">
                <HBox.margin>
-                  <Insets left="15.0" right="100.0" />
-               </HBox.margin>
-            </Label>
-            <Button mnemonicParsing="false" onAction="#ajout" text="Ajouter une vidéo" />
-            <Button mnemonicParsing="false" text="Authoriser" />
-            <Button mnemonicParsing="false" onAction="#back" text="Retour" />
+                  <Insets left="5.0" />
+               </HBox.margin></Button>
+            <Button mnemonicParsing="false" onAction="#back" text="Retour" HBox.hgrow="NEVER">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin></Button>
          </children>
          <padding>
-            <Insets bottom="15.0" left="15.0" right="15.0" />
+            <Insets bottom="15.0" left="15.0" top="15.0" />
          </padding>
+         <VBox.margin>
+            <Insets bottom="15.0" />
+         </VBox.margin>
       </HBox>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0">
+      <Label fx:id="cate">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <ScrollPane prefHeight="329.0" prefWidth="801.0">
          <content>
             <VBox fx:id="pane" prefHeight="200.0" prefWidth="100.0" />
          </content>
+         <VBox.margin>
+            <Insets bottom="15.0" />
+         </VBox.margin>
       </ScrollPane>
       <ScrollPane prefHeight="200.0" prefWidth="200.0">
          <content>
@@ -36,4 +48,7 @@
          </content>
       </ScrollPane>
    </children>
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" />
+   </padding>
 </VBox>

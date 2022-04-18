@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="box" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AjoutCompteControl">
+<VBox fx:id="box" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AjoutCompteControl">
    <children>
-      <HBox alignment="CENTER_RIGHT">
+      <HBox alignment="TOP_RIGHT" prefHeight="190.0" prefWidth="770.0">
          <children>
             <Button mnemonicParsing="false" onAction="#back" text="Retour" />
          </children>
@@ -28,7 +28,7 @@
             <TextField fx:id="type" />
          </children>
       </HBox>
-      <HBox fx:id="pass" alignment="CENTER">
+      <HBox fx:id="pass" alignment="CENTER" minHeight="0.0" minWidth="0.0" prefHeight="26.0" prefWidth="494.0" VBox.vgrow="NEVER">
          <children>
             <Label text="Mot de passe : " />
             <PasswordField fx:id="mdp" />

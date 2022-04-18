@@ -22,6 +22,7 @@ public class CatInfoControl implements Initializable{
     @FXML VBox pane;
     @FXML Label cate;
     @FXML HBox comptesPane;
+    @FXML Button aj;
     
 	protected static PreparedStatement getMinia;
 
@@ -72,7 +73,6 @@ public class CatInfoControl implements Initializable{
                 h.setPadding(new Insets(15, 15, 15, 15));
                 ImageView im = new ImageView();
                 im.setImage(new Image(rs.getString("photo"), 30, 30, false, false)); 
-                //im.setImage(new Image(getClass().getResource(rs.getString("photo")).toString()));
                 Label ty = new Label();
                 if (rs.getInt("status") == 0){
                     ty.setText("Adulte");
@@ -96,11 +96,26 @@ public class CatInfoControl implements Initializable{
         } catch (SQLException e){}
     }
 
+    @FXML protected void authorSwitch(){
+        VueSwitch.switchTo(Vue.AUTHOR);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         cate.setText(categorie);
-        
-        
+        affichVid();
+        try {
+			CompteControl.getCompte.setString(1, CompteControl.id);
+			ResultSet rs = CompteControl.getCompte.executeQuery();
+			if (rs.getInt("status") == 0){
+                afficheCompte();
+
+			} else {
+				comptesPane.setVisible(false);
+                aj.setVisible(false);
+			}
+		} catch (SQLException e) {}
+
     }
     
 }

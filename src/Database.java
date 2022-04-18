@@ -1,3 +1,4 @@
+import java.nio.file.attribute.UserPrincipal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -94,8 +95,6 @@ public class Database {
        if (!checkTable("authorization")) {
             Statement statement = con.createStatement();
 
-            // @formatter:off
-
             statement.executeUpdate(
                   "CREATE TABLE IF NOT EXISTS compte ("
                 + "  idu INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -138,7 +137,7 @@ public class Database {
             );
 
             statement.executeUpdate(
-                "INSERT INTO video(idc, name, path, mini) VALUES (1, 'Boca', '/Users/noemiehanus/Desktop/forever together/stages/boca.mp4', '/minia/Boca.png')"
+                "INSERT INTO video(idc, name, path, mini) VALUES (2, 'Boca', '/Users/noemiehanus/Desktop/forever together/stages/boca.mp4', '/minia/Boca.png')"
             );
 
             statement.executeUpdate(
@@ -162,6 +161,31 @@ public class Database {
                 "INSERT INTO compte(name, password, photo, status) VALUES ('Mathéo', ' ', '/avatar/matheo.png', 2)"
             );
 
+            statement.executeUpdate(
+                "INSERT INTO authorization(idu, idc) VALUES  (1, 1)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO authorization(idu, idc) VALUES  (3, 2)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO authorization(idu, idc) VALUES  (2, 1)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO authorization(idu, idc) VALUES  (3, 1)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO authorization(idu, idc) VALUES  (4, 1)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO authorization(idu, idc) VALUES  (5, 1)"
+            );
+
+
             statement.close();
         }
     }
@@ -172,7 +196,6 @@ public class Database {
          Statement stmt = con.createStatement();
          ResultSet rs = stmt.executeQuery(QUERY);		      
          while(rs.next()){
-            //Display values
             System.out.print("ID: " + rs.getInt("idu"));
             System.out.print(", Nom: " + rs.getString("name"));
             System.out.print(", PW: " + rs.getString("password"));
