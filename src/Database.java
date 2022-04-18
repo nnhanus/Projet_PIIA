@@ -108,17 +108,17 @@ public class Database {
             statement.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS video ("
                 + "  idv INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + "  idc INTEGER REFERENCES category(idc) DEFAULT 0,"
+                + "  idc INTEGER REFERENCES category(idc) DEFAULT 1,"
                 + "  name TEXT UNIQUE NOT NULL,"
                 + "  path TEXT NOT NULL,"
+                + "  descri TEXT,"
                 + "  mini TEXT DEFAULT '/minia/default.png')"
             );
 
             statement.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS category ("
                 + "  idc INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + "  name TEXT UNIQUE NOT NULL,"
-                + "  status INTEGER NOT NULL CHECK (0 <= status AND status <= 3))"
+                + "  name TEXT UNIQUE NOT NULL)"
             );
 
             statement.executeUpdate(
@@ -129,15 +129,39 @@ public class Database {
             );
 
             statement.executeUpdate(
-                "INSERT INTO category(name, status) VALUES ('default', 0)"
+                "INSERT INTO category(name) VALUES ('Default')"
             );
 
             statement.executeUpdate(
-                "INSERT INTO category(name, status) VALUES ('concert', 0)"
+                "INSERT INTO category(name) VALUES ('Concert')"
             );
 
             statement.executeUpdate(
-                "INSERT INTO video(idc, name, path, mini) VALUES (2, 'Boca', '/Users/noemiehanus/Desktop/forever together/stages/boca.mp4', '/minia/Boca.png')"
+                "INSERT INTO category(name) VALUES ('Animation')"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO category(name) VALUES ('Cours Physique')"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO video(idc, name, path, descri, mini) VALUES (2, 'Boca [Live]', 'src/video/Boca.mp4', 'Concert Dreamcatcher Boca', '/minia/Boca.png')"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO video(idc, name, path, descri, mini) VALUES (4, 'Cours Physique 17.3.20', 'src/video/20200317CoursPhys103a_Chap5_part0_1_2_zoom_0.mp4', 'Cours physique 17 mars 2020', '/minia/cours1.png')"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO video(idc, name, path, descri, mini) VALUES (4, 'TD Physique 21.3.20', 'src/video/20200321_TD_Phys103a_Chap5_rapide_OBS_hdole.mp4', 'TD physique du 21 mars 2020', '/minia/cours2.png')"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO video(idc, name, path, descri, mini) VALUES (3, 'Stark Raven Mad', 'src/video/Stark Raven Mad _ Ever_After_High.mp4', 'Ever After High, saison 1, épisode 1, en anglais', '/minia/eah.png')"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO video(idc, name, path, descri, mini) VALUES (3, 'True Reflections', 'src/video/True Reflections _ Ever After High.mp4', 'Ever After High, saison 1, épisode 2, en anglais', '/minia/eah.png')"
             );
 
             statement.executeUpdate(
@@ -147,7 +171,6 @@ public class Database {
             statement.executeUpdate(
                 "INSERT INTO compte(name, password, photo, status) VALUES ('Claude', 'coucou', '/avatar/default.png', 0)"
             );
-            System.out.println("hello");
 
             statement.executeUpdate(
                 "INSERT INTO compte(name, password, photo, status) VALUES ('Marie', 'chevre', '/avatar/marie.png',  1)"
@@ -183,6 +206,14 @@ public class Database {
 
             statement.executeUpdate(
                 "INSERT INTO authorization(idu, idc) VALUES  (5, 1)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO authorization(idu, idc) VALUES  (5, 3)"
+            );
+
+            statement.executeUpdate(
+                "INSERT INTO authorization(idu, idc) VALUES  (4, 4)"
             );
 
 

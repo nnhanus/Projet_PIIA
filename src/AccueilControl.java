@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.print.attribute.HashPrintServiceAttributeSet;
 import javax.swing.Action;
 
 import javafx.event.ActionEvent;
@@ -17,6 +18,7 @@ import javafx.geometry.Pos;
 import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -31,6 +33,8 @@ public class AccueilControl implements Initializable{
 	@FXML protected VBox VBoxComptes;
 	protected static PreparedStatement getCompte;
 	protected static PreparedStatement getMinia;
+	@FXML protected Button ajoutVid;
+	@FXML protected Button ajoutCat;
 
 	static {
 		try{
@@ -51,24 +55,6 @@ public class AccueilControl implements Initializable{
     @FXML protected void switchCompte(){
         VueSwitch.switchTo(Vue.ACCOUNT);
     }
-    
-   /* @FXML protected void affichageHistorique(ActionEvent e) {
-    	for (int i = 0; i < 2; i++) {		// il faudrait parcourir l'historique
-        	Button button = new Button("test" + i);
-        	//HBoxHistorique.setAlignment(Pos.BOTTOM_RIGHT);
-        	HBoxHistorique.getChildren().add(button);
-    		
-    	}
-    }*/
-    
-   /* @FXML protected void  affichageAjoutsRecents(ActionEvent e) {
-    	for (int i = 0; i < 2; i++) {		// il faudrait parcourir les ajouts r�cents
-        	Button button = new Button("test" + i);
-        	//HBoxHistorique.setAlignment(Pos.BOTTOM_RIGHT);
-        	HBoxAjoutsRecents.getChildren().add(button);
-    		
-    	}
-    }*/
     
     protected void  affichageComptes() {
     	try{
@@ -106,28 +92,32 @@ public class AccueilControl implements Initializable{
 	}
     
     @FXML protected void affichageCat() {
-		ArrayList<String> cats = Video.getCategories();
+		ArrayList<String> cats = Video.getCatForUser();
 		for (int i = 0; i < cats.size(); i++){
 			String nom = cats.get(i);
 			Button cat = new Button(nom);
 			VBox tmp = new VBox();
 			tmp.setPadding(new Insets(15, 0, 0, 15));
 			tmp.getChildren().add(cat);
-			VBox vi = new VBox();
+			ScrollPane p = new ScrollPane();
+			HBox vi = new HBox();
+			p.setContent(vi);
 			ArrayList<String> vids = Video.getVidFroCat(nom);
 			for (int j = 0; j < vids.size(); j++){
+				VBox vid = new VBox();
 				String nomVid = vids.get(j);
 				Label nameVid = new Label(nomVid);
 				vi.setPadding(new Insets(10,0,20,0));
-				vi.getChildren().add(nameVid);
+				vid.setPadding(new Insets(10, 20, 20, 0));
+				vid.getChildren().add(nameVid);
 				try {
 					getMinia.setString(1, nomVid);
 					ResultSet min = getMinia.executeQuery();
 					ImageView mini = new ImageView();
 					mini.setFitHeight(50);
-					mini.setFitWidth(50);
+					mini.setFitWidth(75);
 					mini.setImage(new Image(min.getString("mini")));
-					vi.getChildren().add(mini);
+					vid.getChildren().add(mini);
 				} catch (SQLException e1) {
 					System.err.println(e1.getMessage() + " " + e1.getCause());;
 				}
@@ -135,6 +125,7 @@ public class AccueilControl implements Initializable{
 					VidInfControl.nom_vid = nomVid;
 					VueSwitch.switchTo(Vue.VIDINFO);
 				});
+				vi.getChildren().add(vid);
 			}
 			cat.setOnAction(e -> {
 				CatInfoControl.categorie = nom;
@@ -151,7 +142,11 @@ public class AccueilControl implements Initializable{
 
 	@FXML protected void switchCat(){}
 
-	@FXML protected void ajout(){}
+	@FXML protected void ajoutVid(){
+		VueSwitch.switchTo(Vue.AJOUT_VID);
+	}
+
+	@FXML protected void ajoutCat(){}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -163,6 +158,8 @@ public class AccueilControl implements Initializable{
 				affichageComptes();
 			} else {
 				VBoxComptes.setVisible(false);
+				ajoutCat.setVisible(false);
+				ajoutVid.setVisible(false);
 			}
 		} catch (SQLException e) {}
 		

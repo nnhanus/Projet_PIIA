@@ -1,4 +1,6 @@
 
+import java.sql.SQLException;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -7,7 +9,7 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
-  public static void main(String[] args) {
+  public static void main(String[] args){
     if (Database.isValid() || Database.open()) {
       launch(args);
       Database.close();
@@ -22,7 +24,7 @@ public class Main extends Application {
     Scene scene = new Scene(new Pane(), 1000, 600);
     //scene.setFill(Color.BLACK);
   
-    //Database.test();
+    Database.test();
     //Comptes.getUsers(); 
 
     VueSwitch.setScene(scene);

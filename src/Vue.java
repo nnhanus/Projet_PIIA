@@ -10,7 +10,9 @@ public enum Vue {
     SUPPRESSION("fxml/suppression.fxml"),
     VIDINFO("fxml/videoInfo.fxml"),
     CAT_INFO("/fxml/catInfo.fxml"),
-    AUTHOR("fxml/authorisation.fxml");
+    AUTHOR("fxml/authorisation.fxml"),
+    AJOUT_VID("fxml/ajoutVid.fxml"),
+    AJOUT_VID_CAT("fxml/ajoutVidCat.fxml");
 
     private String fileName;
 

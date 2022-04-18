@@ -47,8 +47,6 @@ public void initialize(URL arg0, ResourceBundle arg1){
   m = new Media(new File(file).toURI().toString());
   mp = new MediaPlayer(m);
   mv.setMediaPlayer(mp);
-  //rotate la vidéo parce que apparemment elle est jamais dans le bon sens 
-  mv.setRotate(90);
   //lancer la vidéo quand le player se lance
   mp.play();
 

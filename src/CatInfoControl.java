@@ -31,13 +31,14 @@ public class CatInfoControl implements Initializable{
         VueSwitch.switchTo(Vue.ACCUEIL);
     }
 
-    @FXML void ajout(){}
+    @FXML void ajout(){
+        VueSwitch.switchTo(Vue.AJOUT_VID_CAT);
+    }
 
     protected void affichVid(){
         ArrayList<String> vids = Video.getVidFroCat(categorie);
         for (int j = 0; j < vids.size(); j++){
             String nomVid = vids.get(j);
-            System.out.println(nomVid);
             VBox vid = new VBox();
             Label nameVid = new Label(nomVid);
             vid.setAlignment(Pos.TOP_CENTER);

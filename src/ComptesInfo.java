@@ -50,10 +50,6 @@ public class ComptesInfo implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         name.setText(nom);
         t.setText(type);
-        System.out.println(profil);
-        //Image i = new Image("avatar/default.png");
-        //photo.setImage(i);  
-        System.out.println("image");
     }
 
     @FXML 

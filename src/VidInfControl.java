@@ -21,7 +21,7 @@ public class VidInfControl implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         titre.setText(nom_vid);
-        MPControl.file = Video.getPath("Boca");
+        MPControl.file = Video.getPath(nom_vid);
         try {
             AccueilControl.getMinia.setString(1, nom_vid);
             ResultSet min = AccueilControl.getMinia.executeQuery();

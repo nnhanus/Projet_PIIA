@@ -10,16 +10,18 @@ public class Video {
     protected static PreparedStatement getPath; //Récupérer le chemin d'une vidéo
     protected static PreparedStatement getCategories; //Récupérer toutes les catégories
     protected static PreparedStatement getVidForCat; //Récupérer les vidéos d'une catégorie
-    protected static PreparedStatement getNomForIDC; //Récupérer l'id à partir du nom de catégorie
+    protected static PreparedStatement getNomForIDC; //Récupérer le nom à partir de l'id de catégorie
+    protected static PreparedStatement getIDCForNom; //Récupérer l'id à partir du nom de catégorie
     protected static PreparedStatement getAuthor; //Récupérer les comptes autoriser à une catégorie
     protected static PreparedStatement getNomForIDU; //Récupérer le nom à partir de l'id d'un compte
     protected static PreparedStatement isAuthor;//Récupérer les autorisations d'un compte
-    protected static PreparedStatement getIDUFromNom; //Récupérer l'ID à partir du nom d'une catégorie
+    protected static PreparedStatement getIDUFromNom; //Récupérer l'ID à partir du nom d'un compte
     protected static PreparedStatement supprAuthor; //Supprimer une authorisation
     protected static PreparedStatement ajoutAuthor; //Ajouter une authorisation
     protected static PreparedStatement ajoutVid; //Ajouter une vidéo
     protected static PreparedStatement supprVid; //Supprimer une vidéo
     protected static PreparedStatement ajoutVidCat; //Ajouter une vidéo dans une catégorie
+    protected static PreparedStatement ajoutCat; //AJouter une catégorie
 
     /**Initialisation des requêtes */
     static {
@@ -28,7 +30,8 @@ public class Video {
             getPath = Database.prepareStatement("SELECT path FROM video WHERE name = ?");
 			getCategories = Database.prepareStatement("SELECT * FROM category");
 			getVidForCat = Database.prepareStatement("SELECT * FROM video WHERE idc = ?");
-            getNomForIDC = Database.prepareStatement("SELECT idc FROM category WHERE name = ?");
+            getNomForIDC = Database.prepareStatement("SELECT name FROM category WHERE idc = ?");
+            getIDCForNom = Database.prepareStatement("SELECT idc FROM category WHERE name = ?");
             getAuthor = Database.prepareStatement("SELECT idu FROM authorization WHERE idc = ?");
             getNomForIDU = Database.prepareStatement("SELECT name FROM compte WHERE idu = ?");
             isAuthor = Database.prepareStatement("SELECT idc FROM authorization WHERE idu = ?");
@@ -36,12 +39,42 @@ public class Video {
             supprAuthor = Database.prepareStatement("DELETE FROM authorization WHERE idu = ? AND idc = ?");
             ajoutAuthor = Database.prepareStatement("INSERT INTO authorization VALUES (?, ?)");
             supprVid = Database.prepareStatement("DELETE FROM video WHERE name = ?");
-            ajoutVid = Database.prepareStatement("INSERT INTO video(name, path) VALUES (?, ?)");
-            ajoutVidCat = Database.prepareStatement("INSERT INTO video(idc, name, path) VALUES (?, ?, ?)");
+            ajoutVid = Database.prepareStatement("INSERT INTO video(name, path, descri) VALUES (?, ?, ?)");
+            ajoutVidCat = Database.prepareStatement("INSERT INTO video(idc, name, path, descri) VALUES (?, ?, ?, ?)");
+            ajoutCat = Database.prepareStatement("INSERT INTO category(name) VALUES (?)");
 
         } catch (SQLException e){
             System.out.println("Erreur" + e.getMessage() + e.getCause());
         }
+    }
+
+    public static void ajoutVid(String n, String p, String d){
+        try {
+            ajoutVid.setString(1, n);
+            ajoutVid.setString(2, p);
+            ajoutVid.setString(3, d);
+            ajoutVid.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public static void ajoutVidCat(String n, String p, String d){
+        try {
+            ajoutVidCat.setInt(1, getIDCForNom(CatInfoControl.categorie));
+            ajoutVidCat.setString(2, n);
+            ajoutVidCat.setString(3, p);
+            ajoutVidCat.setString(4, d);
+            ajoutVidCat.executeUpdate();
+        } catch (SQLException e) { System.err.println(e.getMessage()); }
+    }
+
+    public static void suppVid(String n){
+        try {
+            supprVid.setString(1, n);
+            supprVid.executeQuery();
+        } catch (SQLException e) {}
+        
     }
 
     /**
@@ -51,7 +84,7 @@ public class Video {
     public static void ajoutAuthor(String name){
         try {
             int idu = getNomForIDU(name); //récupération de l'id du compte
-            int idc = getNomForIDC(CatInfoControl.categorie); //récupération de la catégorie du compte
+            int idc = getIDCForNom(CatInfoControl.categorie); //récupération de la catégorie du compte
             //complétion de la requête
             ajoutAuthor.setInt(1, idu); 
             ajoutAuthor.setInt(2, idc);
@@ -66,7 +99,7 @@ public class Video {
     public static void supprAuthor(String name){
         try {
             int idu = getNomForIDU(name); //récupération de l'id du compte
-            int idc = getNomForIDC(CatInfoControl.categorie); //récupération de la catégorie du compte
+            int idc = getIDCForNom(CatInfoControl.categorie); //récupération de la catégorie du compte
             //complétion de la requête
             supprAuthor.setInt(1, idu);
             supprAuthor.setInt(2, idc);
@@ -78,8 +111,11 @@ public class Video {
 
     public static boolean isAuthor(String name, String cat){
         int idu = getNomForIDU(name);
-        int idc = getNomForIDC(cat);
+        int idc = getIDCForNom(cat);
         try {
+            if (Comptes.getType(name) == 0){
+                return true;
+            }
             isAuthor.setInt(1, idu);
             ResultSet rs = isAuthor.executeQuery();
             while (rs.next()){
@@ -89,6 +125,24 @@ public class Video {
             }  
         } catch (SQLException e) {}
         return false;
+    }
+
+    public static ArrayList<String> getCatForUser(){
+        ArrayList<String> res = new ArrayList<>();
+        try {
+            if (Comptes.getType(CompteControl.id) == 0){ //les parents ont accès à toutes les catégories
+                return getCategories();
+            } else {
+                ArrayList<String> cat = getCategories();
+                for (String s : cat){
+                    if (isAuthor(CompteControl.id, s)){
+                        res.add(s);
+                    }
+                }
+            }
+        } catch (SQLException e){}
+        return res;
+
     }
 
     /**
@@ -102,7 +156,7 @@ public class Video {
             ArrayList<String> comptes = Comptes.getUsers(); //récupérer les comptes
             for (int i = 0; i < comptes.size(); i++){ //parcours des comptes
                 String nom = comptes.get(i); 
-                if (!(isAuthor(nom, cat))){ //vérification de l'autorisations
+                if (!(isAuthor(nom, cat)) && !(Comptes.getType(nom)==0)){ //vérification de l'autorisations
                     res.add(nom); // si pas d'autorisation, alors ajout du compte au résultat
                 }
             }
@@ -111,16 +165,26 @@ public class Video {
     }
 
     /**
-     * Récupérer le nom à partir d'un id de catégorie
+     * Récupérer l'id' à partir d'un id de catégorie
      * @param name le nom de la catégorie
      * @return l'id de la catégorie
      */
-    public static int getNomForIDC(String name){
+    public static int getIDCForNom(String name){
         int res = -1;
         try {
-            getNomForIDC.setString(1, name); //completion de la requête
-            ResultSet rs = getNomForIDC.executeQuery(); //excécution et récupération des résultats de la requête
+            getIDCForNom.setString(1, name); //completion de la requête
+            ResultSet rs = getIDCForNom.executeQuery(); //excécution et récupération des résultats de la requête
             res = rs.getInt("idc"); // récuperation de l'idc
+        } catch (SQLException e) {}
+        return res;
+    }
+
+    public static String getNomForIDC(int id){
+        String res = "";
+        try {
+            getNomForIDC.setInt(1, id); //completion de la requête
+            ResultSet rs = getIDCForNom.executeQuery(); //excécution et récupération des résultats de la requête
+            res = rs.getString("name"); // récuperation de l'idc
         } catch (SQLException e) {}
         return res;
     }
@@ -146,7 +210,7 @@ public class Video {
      * @return la liste des utilisateurs autorisés
      */
     public static ArrayList<String> getUsersAutho(String name){
-        int idc = getNomForIDC(name); //récupération du nom de la catégorie 
+        int idc = getIDCForNom(name); //récupération du nom de la catégorie 
         ArrayList<String> res = new ArrayList<>();
         try{
             //Récupérer les comptes autoriser à une catégorie
@@ -174,8 +238,8 @@ public class Video {
         ArrayList<String> res = new ArrayList<>();
         try{
             //Récupération de l'id de la catégorie
-            getNomForIDC.setString(1, s);
-            ResultSet idc = getNomForIDC.executeQuery();
+            getIDCForNom.setString(1, s);
+            ResultSet idc = getIDCForNom.executeQuery();
             //Récupération des vidéos de la catégorie
             getVidForCat.setInt(1, idc.getInt("idc"));
             ResultSet rs = getVidForCat.executeQuery();
@@ -192,9 +256,6 @@ public class Video {
             ResultSet rs = getCategories.executeQuery();
             while(rs.next()){
                 res.add(rs.getString("name"));
-            }
-            for (int i = 0; i < res.size(); i++){
-                System.out.println(res.get(i));
             }
         } catch (SQLException e){}
         return res;  
